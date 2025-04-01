@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Order E-Commerce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .header {
+            background-color: #ff6600;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .food-item {
+            background-color: white;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+        }
+        .food-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .food-item button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .cart {
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Food Order E-Commerce</div>
+    <div class="container" id="foodMenu">
+        <!-- Food items will be loaded here dynamically -->
+    </div>
+    <div class="cart">
+        <h2>Cart</h2>
+        <ul id="cartItems"></ul>
+        <p><strong>Total: $<span id="totalPrice">0</span></strong></p>
+    </div>
+    <script>
+        const foodMenu = [
+            { name: "Burger", price: 5, image: "https://via.placeholder.com/150" },
+            { name: "Pizza", price: 8, image: "https://via.placeholder.com/150" },
+            { name: "Pasta", price: 7, image: "https://via.placeholder.com/150" },
+            { name: "Salad", price: 4, image: "https://via.placeholder.com/150" }
+        ];
+
+        const menuContainer = document.getElementById("foodMenu");
+        const cartItems = document.getElementById("cartItems");
+        const totalPrice = document.getElementById("totalPrice");
+        let cart = [];
+
+        function loadMenu() {
+            foodMenu.forEach((item, index) => {
+                const foodDiv = document.createElement("div");
+                foodDiv.classList.add("food-item");
+                foodDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>Price: $${item.price}</p>
+                    <button onclick="addToCart(${index})">Add to Cart</button>
+                `;
+                menuContainer.appendChild(foodDiv);
+            });
+        }
+
+        function addToCart(index) {
+            cart.push(foodMenu[index]);
+            updateCart();
+        }
+
+        function updateCart() {
+            cartItems.innerHTML = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const li = document.createElement("li");
+                li.innerText = ${item.name} - $${item.price};
+                cartItems.appendChild(li);
+            });
+            totalPrice.innerText = total;
+        }
+
+        loadMenu();
+    </script>
+</body>
+</html>
